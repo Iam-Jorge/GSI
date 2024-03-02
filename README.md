@@ -1,2 +1,3 @@
 # Gestión de Sistemas de Información: Laboratorio
-Técnicas de Minería de Datos basadas en Clustering
+
+## Integración de Sistema de Posicionamiento Global (GPS)
