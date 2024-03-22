@@ -1,3 +1,3 @@
-# lab_gsi_gps
+# Gestión de Sistemas de Información: Laboratorio
 
-A new Flutter project.
+## Integración de Sistema de Posicionamiento Global (GPS)
