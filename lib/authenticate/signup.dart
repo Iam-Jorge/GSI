@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'auth_service.dart';
+import '../views/dashboard_principal.dart';
+import 'login.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -11,6 +14,8 @@ class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
+
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -45,20 +50,39 @@ class _SignupState extends State<Signup> {
                 },
                 onSaved: (value) => _password = value!,
               ),
-
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Email: $_email\nPassword: $_password')),
-                      );
+                      bool success = _authService.signUp(_email, _password);
+                      if (success) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Registration successful')),
+                        );
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const DashboardScreen()),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('User already exists')),
+                        );
+                      }
                     }
                   },
                   child: const Text('Submit'),
                 ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Login()),
+                  );
+                },
+                child: const Text('Already have an account? Login'),
               ),
             ],
           ),
